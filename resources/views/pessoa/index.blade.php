@@ -37,8 +37,4 @@
         @endforeach
     </tbody>
 </table>
-<!-- Botões -->
-<div style="margin-top: 20px;">
-    <a href="{{route('pessoa.create')}}" class="btn btn-primary">Cadastrar</a>
-</div>
 @endsection()

@@ -20,7 +20,6 @@ class PessoaController extends Controller
               FROM pessoa
              ORDER BY cd_pessoa
 SQL;
-        
         $data = DB::select($sql);
 
         return view('pessoa.index')->with('data', $data);
@@ -51,7 +50,7 @@ SQL;
         $pessoa->save();
         DB::commit();
 
-        return redirect()->route('pessoa.index')->with('status', 'Sucesso!');
+        return redirect()->route('pessoa.create')->with('status', 'Sucesso!');
     }
 
     /**
