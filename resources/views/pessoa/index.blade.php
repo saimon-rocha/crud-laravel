@@ -1,27 +1,8 @@
 @extends('layouts.app')
-
+@section('titulo', 'Lista')
 @section('conteudo')
 
-<script>
-    function excluir(cdPessoa) {
-        if (confirm('Deseja excluir ?')) {
-            var csrf = $('meta[name="csrf-token"]').attr('content');
-
-            $.ajax({
-                method: "DELETE",
-                url: "/pessoa/" + cdPessoa,
-                data: {
-                    '_token': csrf
-                },
-                success: function() {
-                    self.location.reload();
-                }
-            });
-        }
-    }
-</script>
-
-<h1 style="text-align: center;">Listagem de Pessoas</h1>
+<h1 style="text-align: center;">Clientes</h1>
 
 <!-- Tabela de Listagem -->
 <table class="table table-dark" style="text-align: center; margin-top:20px;">
@@ -41,8 +22,16 @@
             <td> {{ $objPessoa->nm_pessoa }}</td>
             <td> {{ date('d/m/Y', strtotime($objPessoa->dt_nascimento)) }}</td>
             <td>
-                <a href="{{route('pessoa.edit', $objPessoa->cd_pessoa)}}" title="Editar">EDITAR</a>
-                <a href="{{ route('pessoa.destroy', $objPessoa->cd_pessoa)}} " style="margin-left: 10px;" title="Deletar" onclick="javascript:excluir({{ $objPessoa->cd_pessoa }})">EXCLUIR</a>
+                <form action="/pessoa/{{ $objPessoa->cd_pessoa }}" method="POST">
+                    <a href="/pessoa/edit/{{ $objPessoa->cd_pessoa }}" class="btn btn-info edit-btn">
+                        <ion-icon name="create-outline"></ion-icon> Editar
+                    </a>
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger delete-btn">
+                        <ion-icon name="trash-outline"></ion-icon> Deletar
+                    </button>
+                </form>
             </td>
         </tr>
         @endforeach

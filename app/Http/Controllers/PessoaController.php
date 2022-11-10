@@ -31,7 +31,7 @@ SQL;
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() // cadastrar pessoa
+    public function create() //Adicionar
     {
         return view('pessoa.adicionar');
     }
@@ -42,12 +42,14 @@ SQL;
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Salvar pessoa
+    public function store(Request $request) // Criar pessoa
     {
+        DB::beginTransaction();
         $pessoa = new Pessoa();
         $pessoa->nm_pessoa     = $request->nm_pessoa;
         $pessoa->dt_nascimento = $request->dt_nascimento;
         $pessoa->save();
+        DB::commit();
 
         return redirect()->route('pessoa.index')->with('status', 'Sucesso!');
     }
@@ -69,8 +71,10 @@ SQL;
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pessoa $pessoa) // Editar Pessoa
+    public function edit($cd_pessoa) // Editar Pessoa
     {
+        $pessoa = Pessoa::findOrFail($cd_pessoa);
+
         return view('pessoa.editar')->with('pessoa', $pessoa);
     }
 
@@ -83,9 +87,11 @@ SQL;
      */
     public function update(Request $request, Pessoa $pessoa) //Atualizar Pessoa
     {
+        DB::beginTransaction();
         $pessoa->nm_pessoa       = $request->nm_pessoa;
         $pessoa->dt_nascimento   = $request->dt_nascimento;
         $pessoa->save();
+        DB::commit();
 
         return redirect()->route('pessoa.index')->with('status', 'Pessoa Atualizada com sucesso!');
     }
@@ -96,10 +102,11 @@ SQL;
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pessoa $pessoa) //Exclui 
+    public function destroy($cd_pessoa) //Exclui 
     {
-        $pessoa->delete();
-        session()->flash('status', 'Pessoa Excluída!');
-        return response('OK');
+        Pessoa::findOrFail($cd_pessoa)->delete();
+
+        return redirect('/')->with('msg', 'Evento excluído com sucesso!');
+
     }
 }
