@@ -43,14 +43,18 @@ SQL;
      */
     public function store(Request $request) // Criar pessoa
     {
-        DB::beginTransaction();
-        $pessoa = new Pessoa();
-        $pessoa->nm_pessoa     = $request->nm_pessoa;
-        $pessoa->dt_nascimento = $request->dt_nascimento;
-        $pessoa->save();
-        DB::commit();
-
-        return redirect()->route('pessoa.create')->with('status', 'Sucesso!');
+        try {
+            DB::beginTransaction();
+            $pessoa = new Pessoa();
+            $pessoa->nm_pessoa     = $request->nm_pessoa;
+            $pessoa->dt_nascimento = $request->dt_nascimento;
+            $pessoa->save();
+            DB::commit();
+            return redirect()->route('pessoa.create')->with('sucesso', 'Cadastrado com Sucesso!');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->route('pessoa.create')->with('error', 'Erro pessoa já cadastrada!');
+        }
     }
 
     /**
@@ -86,13 +90,17 @@ SQL;
      */
     public function update(Request $request, Pessoa $pessoa) //Atualizar Pessoa
     {
-        DB::beginTransaction();
-        $pessoa->nm_pessoa       = $request->nm_pessoa;
-        $pessoa->dt_nascimento   = $request->dt_nascimento;
-        $pessoa->save();
-        DB::commit();
-
-        return redirect()->route('pessoa.index')->with('status', 'Pessoa Atualizada com sucesso!');
+        try {
+            DB::beginTransaction();
+            $pessoa->nm_pessoa       = $request->nm_pessoa;
+            $pessoa->dt_nascimento   = $request->dt_nascimento;
+            $pessoa->save();
+            DB::commit();
+            return redirect()->route('pessoa.index')->with('sucesso', 'Pessoa Atualizada com sucesso!');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->route('pessoa.index')->with('error', 'Erro ao atualizar!');
+        }
     }
 
     /**
@@ -103,9 +111,12 @@ SQL;
      */
     public function destroy($cd_pessoa) //Exclui 
     {
-        Pessoa::findOrFail($cd_pessoa)->delete();
-
-        return redirect('/')->with('msg', 'Evento excluído com sucesso!');
-
+        try {
+            Pessoa::findOrFail($cd_pessoa)->delete();
+            return redirect()->route('pessoa.index')->with('sucesso', 'Cliente excluído com sucesso!');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->route('pessoa.index')->with('error', 'Erro ao excluir evento!');
+        }
     }
 }

@@ -23,16 +23,15 @@
             <td> {{ date('d/m/Y', strtotime($objPessoa->dt_nascimento)) }}</td>
             <td>
                 <form action="/pessoa/{{ $objPessoa->cd_pessoa }}" method="POST">
-                    <a href="/pessoa/edit/{{ $objPessoa->cd_pessoa }}" class="btn btn-info edit-btn">
-                        <ion-icon name="create-outline"></ion-icon> Editar
+                    <a href="/pessoa/edit/{{ $objPessoa->cd_pessoa }}" class="btn btn-info">
+                        <i class="bi bi-pencil"></i>
                     </a>
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger delete-btn">
-                        <ion-icon name="trash-outline"></ion-icon> Deletar
-                    </button>
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
                 </form>
             </td>
+            <a></a>
         </tr>
         @endforeach
     </tbody>

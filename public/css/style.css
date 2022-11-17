@@ -1,0 +1,34 @@
+/* Configuração da caixa de mensagem quando cadastra, exclui e edita um cliente */
+.status {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Corpo do Site */
+body.dark-mode {
+    background-color: #212529;
+    color: #899095;
+}
+
+.dark-mode a {
+    color: #dee2e6;
+}
+
+.dark-mode a:hover {
+    color: #3cc368;
+}
+
+/* Dados dentro do container-fluid */
+.container-fluid {
+    margin-top: 10px;
+}
+
+/* Listagem de Cliente */
+.tabela-listagem{
+    background-color: #3cc368;
+}
