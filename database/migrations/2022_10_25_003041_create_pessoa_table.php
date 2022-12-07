@@ -17,6 +17,7 @@ class CreatePessoaTable extends Migration
             $table->increments('cd_pessoa');
             $table->string('nm_pessoa', 200);
             $table->date('dt_nascimento');
+            $table->string('cpf', 11);
             $table->timestamps();
         });
     }
