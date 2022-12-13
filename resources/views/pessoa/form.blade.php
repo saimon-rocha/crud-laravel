@@ -38,8 +38,8 @@
     </div>
 
     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2">
-        {{ Form::label('numeroResidencia', 'N°', ['class' => 'control-label']) }}
-        {{ Form::text('numeroResidencia', null, ['class' => 'form-control', 'required']) }}
+        {{ Form::label('numero', 'N°', ['class' => 'control-label']) }}
+        {{ Form::text('numero', null, ['class' => 'form-control', 'required']) }}
     </div>   
 </div>
 

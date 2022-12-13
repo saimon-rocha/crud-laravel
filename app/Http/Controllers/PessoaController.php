@@ -16,13 +16,15 @@ class PessoaController extends Controller
     public function index()
     {
         $sql = <<<SQL
-            SELECT cd_pessoa, nm_pessoa, dt_nascimento
-              FROM pessoa
-             ORDER BY cd_pessoa
+            SELECT p.cd_pessoa, p.nm_pessoa, p.dt_nascimento, p.cpf,
+                   p.rua, p.bairro, p.numero, p.cep
+              FROM pessoa p
+             ORDER BY p.cd_pessoa
 SQL;
         $data = DB::select($sql);
 
-        return view('pessoa.index')->with('data', $data);
+        return view('pessoa.index')
+            ->with('data', $data);
     }
 
     /**
@@ -48,12 +50,18 @@ SQL;
             $pessoa = new Pessoa();
             $pessoa->nm_pessoa     = $request->nm_pessoa;
             $pessoa->dt_nascimento = $request->dt_nascimento;
+            $pessoa->cpf           = $request->cpf;
+            $pessoa->rua           = $request->rua;
+            $pessoa->bairro        = $request->bairro;
+            $pessoa->numero        = $request->numero;
+            $pessoa->cep           = $request->cep;
             $pessoa->save();
             DB::commit();
+
             return redirect()->route('pessoa.create')->with('sucesso', 'Cadastrado com Sucesso!');
         } catch (\Exception $ex) {
             DB::rollBack();
-            return redirect()->route('pessoa.create')->with('error', 'Erro pessoa já cadastrada!');
+            return redirect()->route('pessoa.create')->with('error', 'Erro ao cadastrar cadastrada!');
         }
     }
 

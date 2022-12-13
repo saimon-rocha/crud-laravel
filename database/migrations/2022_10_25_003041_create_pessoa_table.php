@@ -18,6 +18,10 @@ class CreatePessoaTable extends Migration
             $table->string('nm_pessoa', 200);
             $table->date('dt_nascimento');
             $table->string('cpf', 11);
+            $table->string('rua', 200);
+            $table->string('bairro', 200);
+            $table->integer('numero');
+            $table->integer('cep');
             $table->timestamps();
         });
     }
