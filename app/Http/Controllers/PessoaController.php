@@ -100,8 +100,13 @@ SQL;
     {
         try {
             DB::beginTransaction();
-            $pessoa->nm_pessoa       = $request->nm_pessoa;
-            $pessoa->dt_nascimento   = $request->dt_nascimento;
+            $pessoa->nm_pessoa     = $request->nm_pessoa;
+            $pessoa->dt_nascimento = $request->dt_nascimento;
+            $pessoa->cpf           = $request->cpf;
+            $pessoa->rua           = $request->rua;
+            $pessoa->bairro        = $request->bairro;
+            $pessoa->numero        = $request->numero;
+            $pessoa->cep           = $request->cep;
             $pessoa->save();
             DB::commit();
             return redirect()->route('pessoa.index')->with('sucesso', 'Pessoa Atualizada com sucesso!');
