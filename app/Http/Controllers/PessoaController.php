@@ -96,10 +96,11 @@ SQL;
      * @param  \App\Models\Pessoa  $pessoa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pessoa $pessoa) //Atualizar Pessoa
+    public function update(Request $request, $cd_pessoa) //Atualizar Pessoa
     {
         try {
             DB::beginTransaction();
+            $pessoa = Pessoa::find($cd_pessoa);
             $pessoa->nm_pessoa     = $request->nm_pessoa;
             $pessoa->dt_nascimento = $request->dt_nascimento;
             $pessoa->cpf           = $request->cpf;
